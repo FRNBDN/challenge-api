@@ -12,11 +12,11 @@ CATEGORY_CHOICES = (
 )
 
 REPETITION_CHOICES = (
-    ('never'),
-    ('daily'),
-    ('weekly'),
-    ('monthly'),
-    ('annualy'),
+    ('never', 'NEVER'),
+    ('daily', 'DAILY'),
+    ('weekly', 'WEEKLY'),
+    ('monthly', 'MONTHLY'),
+    ('annualy', 'ANNUALY'),
 )
 
 
@@ -28,7 +28,7 @@ class Group(models.Model):
     category = models.CharField(max_length=25, choices=CATEGORY_CHOICES)
     description = models.TextField(max_length=255)
     criteria = models.TextField()
-    date = models.DateTimeField()
+    date = models.DateField()
     repetition = models.CharField(
         max_length=25, choices=REPETITION_CHOICES, default='never')
     tags = TaggableManager()
