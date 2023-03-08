@@ -1,13 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
-class Tag(models.Model):
-    text = models.CharField(max_length=16, unique=True)
-
-    def __str__(self):
-        return f"({self.id}) {self.text}"
-
+from taggit.managers import TaggableManager
 
 CATEGORY_CHOICES = (
     ('spiritual', 'SPIRITUAl'),
@@ -38,7 +31,7 @@ class Group(models.Model):
     date = models.DateTimeField()
     repetition = models.CharField(
         max_length=25, choices=REPETITION_CHOICES, default='never')
-    tags = models.ManyToManyField(Tag, related_name='groups')
+    tags = TaggableManager()
     # memebers and challenge missing
 
     class Meta:
