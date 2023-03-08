@@ -3,20 +3,20 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 CATEGORY_CHOICES = (
-    ('spiritual', 'SPIRITUAl'),
-    ('financial', 'FINANCIAL'),
-    ('career', 'CAREER'),
-    ('intellectual', 'INTELLECTUAL'),
-    ('fitness', 'FITNESS'),
-    ('social', 'SOCIAL'),
+    ('SPI', 'Spiritual'),
+    ('FIN', 'Financial'),
+    ('CAR', 'Career'),
+    ('INT', 'Intellectual'),
+    ('FIT', 'Fitness'),
+    ('SOC', 'Social'),
 )
 
 REPETITION_CHOICES = (
-    ('never', 'NEVER'),
-    ('daily', 'DAILY'),
-    ('weekly', 'WEEKLY'),
-    ('monthly', 'MONTHLY'),
-    ('annualy', 'ANNUALY'),
+    ('never', 'One Time Challenge'),
+    ('daily', 'Repeats Daily'),
+    ('weekly', 'Repeats Weekly'),
+    ('monthly', 'Repeats Monthly'),
+    ('annualy', 'Repeats Annualy'),
 )
 
 
@@ -26,8 +26,8 @@ class Group(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=160)
     category = models.CharField(max_length=25, choices=CATEGORY_CHOICES)
-    description = models.TextField(max_length=255)
-    criteria = models.TextField()
+    description = models.TextField(max_length=500)
+    criteria = models.TextField(max_length=500)
     date = models.DateField()
     repetition = models.CharField(
         max_length=25, choices=REPETITION_CHOICES, default='never')
