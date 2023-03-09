@@ -30,11 +30,13 @@ class Group(models.Model):
     category = models.CharField(max_length=25,
                                 choices=CATEGORY_CHOICES,
                                 default='ETC')
+    challenge_title = models.CharField(max_length=160, default="Challenge")
     description = models.TextField(max_length=500, default='...')
     criteria = models.TextField(max_length=500, default='...')
     date = models.DateField(default=date.today, blank=False)
     repetition = models.CharField(
         max_length=25, choices=REPETITION_CHOICES, default='weekly')
+    end_date = models.DateField(blank=True, null=True)
     tags = TaggableManager(blank=True)
     # memebers and challenge missing
 
