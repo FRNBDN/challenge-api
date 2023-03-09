@@ -44,4 +44,4 @@ class Group(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.id} {self.title} {self.category}"
+        return f"[{self.category}] {self.title} ({self.id})"

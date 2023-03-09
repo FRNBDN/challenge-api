@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'taggit',
     'profiles',
     'groups',
+    'challenges',
+    
   
 
 ]
