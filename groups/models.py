@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from datetime import date
 
 CATEGORY_CHOICES = (
     ('SPI', 'Spiritual'),
@@ -9,6 +10,7 @@ CATEGORY_CHOICES = (
     ('INT', 'Intellectual'),
     ('FIT', 'Fitness'),
     ('SOC', 'Social'),
+    ('ETC', 'Other'),
 )
 
 REPETITION_CHOICES = (
@@ -24,14 +26,16 @@ class Group(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    title = models.CharField(max_length=160)
-    category = models.CharField(max_length=25, choices=CATEGORY_CHOICES)
-    description = models.TextField(max_length=500)
-    criteria = models.TextField(max_length=500)
-    date = models.DateField()
+    title = models.CharField(max_length=160, unique=True, blank=False)
+    category = models.CharField(max_length=25,
+                                choices=CATEGORY_CHOICES,
+                                default='ETC')
+    description = models.TextField(max_length=500, default='...')
+    criteria = models.TextField(max_length=500, default='...')
+    date = models.DateField(default=date.today, blank=False)
     repetition = models.CharField(
-        max_length=25, choices=REPETITION_CHOICES, default='never')
-    tags = TaggableManager()
+        max_length=25, choices=REPETITION_CHOICES, default='weekly')
+    tags = TaggableManager(blank=True)
     # memebers and challenge missing
 
     class Meta:
