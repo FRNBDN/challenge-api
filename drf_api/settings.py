@@ -53,8 +53,7 @@ INSTALLED_APPS = [
     'profiles',
     'groups',
     'challenges',
-    
-  
+    'submissions',
 
 ]
 
