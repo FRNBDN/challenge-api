@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('challenges.urls')),
     path('', include('submissions.urls')),
     path('', include('criteria.urls')),
+    path('', include('uploads.urls')),
 ]
