@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'groups',
     'challenges',
     'submissions',
+    'criteria',
 
 ]
 
