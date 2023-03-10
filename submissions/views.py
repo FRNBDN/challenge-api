@@ -20,20 +20,18 @@ class SubmissionList(APIView):
         )
         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
-        uploads = request.FILES.getlist('upload', None)
-        data = {
-            "title": request.POST.get('title', None),
-            }
-        _serializer = self.serializer_class(data=data, context={
-            'uploads': uploads})
-        if _serializer.is_valid():
-            _serializer.save()
-            return Response(data=_serializer.data,
-                            status=status.HTTP_201_CREATED)
-        else:
-            return Response(data=_serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        serializer = SubmissionSerializer(
+            data=request.data, context={'request': request}
+        )
+        if serializer.is_valid():
+            serializer.save(owner=request.user)
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 class SubmissionDetail(APIView):

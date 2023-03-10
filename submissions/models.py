@@ -9,10 +9,3 @@ class Submission(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
     challenge = models.OneToOneField(Challenge, on_delete=models.CASCADE)
     text = models.TextField(max_length=500)
-
-
-class Uploads(models.Model):
-    submission = models.ForeignKey(Submission,
-                                   on_delete=models.CASCADE,
-                                   related_name='submissionuploads')
-    upload = models.FileField(upload_to='uploads/', blank=True, null=True)
