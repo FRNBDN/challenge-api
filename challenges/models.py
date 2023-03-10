@@ -19,7 +19,6 @@ class Challenge(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=160, default="Challenge")
     description = models.TextField(max_length=500, default='...')
-    criteria = models.TextField(max_length=500, default='...')
     date = models.DateField(default=date.today, blank=False)
     repetition = models.CharField(
         max_length=25, choices=REPETITION_CHOICES, default='weekly')
