@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'submissions',
     'criteria',
     'uploads',
+    'reviews',
 
 ]
 
