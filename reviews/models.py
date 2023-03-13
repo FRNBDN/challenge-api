@@ -12,6 +12,7 @@ class Review(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        unique_together = ['owner', 'submission']
 
     def __str__(self):
         return self.body
