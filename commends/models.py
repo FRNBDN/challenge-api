@@ -10,6 +10,7 @@ class Commend(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        unique_together = ['owner', 'submission']
 
     def __str__(self):
         return f'{self.owner} {self.submission}'
