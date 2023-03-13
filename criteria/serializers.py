@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from criteria.models import Criterion
+from criteria.models import Criteria
 
 
-class CriterionSerializer(serializers.ModelSerializer):
+class CriteriaSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     challenge = serializers.ReadOnlyField(source='challenge.title')
@@ -12,7 +12,7 @@ class CriterionSerializer(serializers.ModelSerializer):
         return request.user == obj.owner
 
     class Meta:
-        model = Criterion
+        model = Criteria
         fields = [
             'id', 'owner', 'is_owner', 'challenge', 'text',
             'created_at', 'updated_at',

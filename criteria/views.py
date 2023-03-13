@@ -1,19 +1,19 @@
 from rest_framework import generics, permissions
 from drf_api.permissions import IsOwnerOrReadOnly
-from .models import Criterion
-from .serializers import CriterionSerializer
+from .models import Criteria
+from .serializers import CriteriaSerializer
 
 
 class CriteriaList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Criterion.objects.all()
-    serializer_class = CriterionSerializer
+    queryset = Criteria.objects.all()
+    serializer_class = CriteriaSerializer
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
-class CriterionDetail(generics.RetrieveDestroyAPIView):
+class CriteriaDetail(generics.RetrieveDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Criterion.objects.all()
-    serializer_class = CriterionSerializer
+    queryset = Criteria.objects.all()
+    serializer_class = CriteriaSerializer

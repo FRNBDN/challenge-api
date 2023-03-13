@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from challenges.models import Challenge
 
 
-class Criterion(models.Model):
+class Criteria(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
