@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Challenge
 from .serializers import ChallengeSerializer
-from drf_api.permission import IsOwnerOrReadOnly
+from drf_api.permissions import IsOwnerOrReadOnly
 
 
 class ChallengesList(APIView):

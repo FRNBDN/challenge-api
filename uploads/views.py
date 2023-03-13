@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from drf_api.permission import IsOwnerOrReadOnly
+from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Upload
 from .serializers import UploadSerializer
 

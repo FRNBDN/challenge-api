@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Group
 from .serializers import GroupSerializer
-from drf_api.permission import IsOwnerOrReadOnly
+from drf_api.permissions import IsOwnerOrReadOnly
 
 
 class GroupList(APIView):

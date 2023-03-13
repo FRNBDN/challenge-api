@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from drf_api.permission import IsOwnerOrReadOnly
+from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Review
 from .serializers import ReviewSerializer, ReviewDetailSerializer
 

@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from .models import Submission
 from .serializers import SubmissionSerializer
-from drf_api.permission import IsOwnerOrReadOnly
+from drf_api.permissions import IsOwnerOrReadOnly
 
 
 class SubmissionList(APIView):
