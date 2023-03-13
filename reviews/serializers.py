@@ -20,5 +20,5 @@ class ReviewSerializer(serializers.ModelSerializer):
         ]
 
 
-class ReviewDetailSerializer(CommentSerializer):
+class ReviewDetailSerializer(ReviewSerializer):
     submission = serializers.ReadOnlyField(source='submission.id')
