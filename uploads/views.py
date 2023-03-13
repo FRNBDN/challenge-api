@@ -1,20 +1,17 @@
 from rest_framework import generics, permissions
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Upload
 from .serializers import UploadSerializer
 
 
-class UploadList(APIView):
-    def get(self, request):
-        uploads = Upload.objects.all()
-        serializer = UploadSerializer(
-            uploads,
-            many=True,
-            context={'request': request}
-            )
-        return Response(serializer.data)
+class UploadList(generics.ListCreateAPIView):
+    serializer_class = UploadSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly
+    ]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class UploadDetail(generics.RetrieveDestroyAPIView):
