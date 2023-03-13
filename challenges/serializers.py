@@ -27,4 +27,5 @@ class ChallengeSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'created_at', 'group', 'title',
             'date', 'is_owner', 'description', 'repetition',
+            'criteria_id',
         ]
