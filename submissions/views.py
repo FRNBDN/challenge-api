@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import generics, permissions
 from .models import Submission
 from .serializers import SubmissionSerializer
@@ -9,7 +10,14 @@ class SubmissionList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = Submission.objects.all()
+    queryset = Submission.objects.annotate(
+        commends=Count(
+            'commend', distinct=True
+        ),
+        reviews=Count(
+            'review', distinct=True
+        )
+    )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -18,4 +26,11 @@ class SubmissionList(generics.ListCreateAPIView):
 class SubmissionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubmissionSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Submission.objects.all()
+    queryset = Submission.objects.annotate(
+        commends=Count(
+            'commend', distinct=True
+        ),
+        reviews=Count(
+            'review', distinct=True
+        )
+    )
