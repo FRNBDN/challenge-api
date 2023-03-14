@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'reviews',
     'commends',
     'followers',
+    'members',
 
 ]
 

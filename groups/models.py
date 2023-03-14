@@ -23,6 +23,7 @@ class Group(models.Model):
                                 choices=CATEGORY_CHOICES,
                                 default='ETC')
     tags = TaggableManager(blank=True)
+    members = models.ManyToManyField(User, related_name='members')
 
     class Meta:
         ordering = ['-created_at']

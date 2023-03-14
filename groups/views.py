@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import generics, permissions
 from .models import Group
 from .serializers import GroupSerializer
@@ -9,7 +10,10 @@ class GroupList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = Group.objects.all()
+    queryset = Group.objects.annotate(
+     members_count=Count('members', distinct=True),
+
+    ).order_by('-created_at')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
