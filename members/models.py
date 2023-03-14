@@ -5,10 +5,10 @@ from groups.models import Group
 
 class Member(models.Model):
     member = models.ForeignKey(
-        User, related_name='member', on_delete=models.CASCADE
+        User, on_delete=models.CASCADE
     )
     group = models.ForeignKey(
-        Group, related_name='group', on_delete=models.CASCADE
+        Group, on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

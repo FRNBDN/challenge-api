@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Group
+from members.models import Member
 from taggit.serializers import (TagListSerializerField,
                                 TaggitSerializer)
 
@@ -7,7 +8,7 @@ from taggit.serializers import (TagListSerializerField,
 class GroupSerializer(TaggitSerializer, serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    is_member = serializers.SerializerMethodField()
+    member_id = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     tags = TagListSerializerField()
@@ -18,21 +19,28 @@ class GroupSerializer(TaggitSerializer, serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
 
-    def get_is_member(self, obj):
-        request = self.context['request']
-        return obj.members.filter(id=request.user.id).exists()
+    def get_member_id(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            member = Member.objects.filter(
+                member=user, group=obj
+            ).first()
+            return member.id if member else None
+        return None
 
     def get_members(self, obj):
-        members = list(obj.members.all())
+        members = Member.objects.filter(
+            group=obj
+        )
         membersList = []
         for member in members:
-            membersList.append(member.username)
+            membersList.append(member.member.username)
         return membersList
 
     class Meta:
         model = Group
         fields = [
-            'id', 'owner', 'is_owner', 'is_member', 'profile_id',
+            'id', 'owner', 'is_owner', 'member_id', 'profile_id',
             'profile_image', 'created_at', 'updated_at',
             'title', 'category', 'tags', 'members', 'members_count'
         ]

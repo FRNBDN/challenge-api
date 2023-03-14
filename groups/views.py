@@ -11,7 +11,7 @@ class GroupList(generics.ListCreateAPIView):
         permissions.IsAuthenticatedOrReadOnly
     ]
     queryset = Group.objects.annotate(
-     members_count=Count('members', distinct=True),
+     members_count=Count('member', distinct=True),
 
     ).order_by('-created_at')
 
