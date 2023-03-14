@@ -4,9 +4,7 @@ from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Profile
 from .serializers import ProfileSerializer
 
-
-class ProfileList(generics.ListAPIView):
-    queryset = Profile.objects.annotate(
+QUERYSET = Profile.objects.annotate(
         groups_joined=Count('owner__group', distinct=True),
         followers_count=Count(
             'owner__followed', distinct=True
@@ -16,8 +14,19 @@ class ProfileList(generics.ListAPIView):
             ),
         challenges_created=Count(
             'owner__challenge', distinct=True
-            )
+            ),
+        challenges_interactions=Count(
+            'owner__challenge__submission__commend', distinct=True
+        )+Count(
+            'owner__challenge__submission__review', distinct=True
+        )+Count(
+            'owner__challenge__submission', distinct=True
+        )
     ).order_by('-created_at')
+
+
+class ProfileList(generics.ListAPIView):
+    queryset = QUERYSET
     serializer_class = ProfileSerializer
     filter_backends = [
         filters.OrderingFilter
@@ -34,16 +43,5 @@ class ProfileList(generics.ListAPIView):
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Profile.objects.annotate(
-        groups_joined=Count('owner__group', distinct=True),
-        followers_count=Count(
-            'owner__followed', distinct=True
-            ),
-        following_count=Count(
-            'owner__following', distinct=True
-            ),
-        challenges_created=Count(
-            'owner__challenge', distinct=True
-            )
-    ).order_by('-created_at')
+    queryset = QUERYSET
     serializer_class = ProfileSerializer

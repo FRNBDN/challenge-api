@@ -11,6 +11,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
     challenges_created = serializers.ReadOnlyField()
+    challenges_interactions = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -31,5 +32,5 @@ class ProfileSerializer(serializers.ModelSerializer):
             'id', 'owner', 'created_at', 'updated_at', 'name',
             'bio', 'image', 'is_owner', 'following_id',
             'groups_joined', 'followers_count', 'following_count',
-            'challenges_created', 
+            'challenges_created', 'challenges_interactions'
         ]
