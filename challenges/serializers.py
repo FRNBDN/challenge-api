@@ -7,13 +7,14 @@ class ChallengeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     criteria_id = serializers.SerializerMethodField()
+    submissions = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
 
     def get_criteria_id(self, obj):
-        request = self.context['request'].user
+        request = self.context['request']
         criteria = Criteria.objects.filter(
             challenge=obj
             )
@@ -27,5 +28,5 @@ class ChallengeSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'created_at', 'group', 'title',
             'date', 'is_owner', 'description', 'repetition',
-            'criteria_id',
+            'criteria_id', 'submissions',
         ]
