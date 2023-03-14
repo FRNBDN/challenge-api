@@ -14,7 +14,7 @@ REPETITION_CHOICES = (
 
 
 class Challenge(models.Model):
-    group = models.OneToOneField(Group, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=160, default="Challenge")

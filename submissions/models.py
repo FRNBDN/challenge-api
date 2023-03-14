@@ -12,10 +12,17 @@ SUBMISSION_STATUS = (
 
 class Submission(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
-    group = models.OneToOneField(Group, on_delete=models.CASCADE)
-    challenge = models.OneToOneField(Challenge, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=500)
-    stauts = models.CharField(
+    status = models.CharField(
         max_length=50,
         choices=SUBMISSION_STATUS,
         default=1)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"({self.id}) {self.owner.username}"

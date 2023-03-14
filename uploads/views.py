@@ -9,9 +9,10 @@ class UploadList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
+    queryset = Upload.objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save()
 
 
 class UploadDetail(generics.RetrieveDestroyAPIView):

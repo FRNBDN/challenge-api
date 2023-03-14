@@ -1,3 +1,4 @@
+from django.db.models import Count, Q
 from rest_framework import generics, permissions
 from .models import Challenge
 from .serializers import ChallengeSerializer
@@ -9,7 +10,13 @@ class ChallengesList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = Challenge.objects.all()
+    queryset = Challenge.objects.annotate(
+     users_count=Count('join', distinct=True),
+     submissions_count=Count('submission', distinct=True),
+     completed_count=Count(
+        'submission', filter=Q(submission__status=2)
+        )
+    ).order_by('-created_at')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

@@ -27,5 +27,5 @@ class SubmissionSerializer(serializers.ModelSerializer):
         model = Submission
         fields = [
             'id', 'owner', 'group', 'challenge', 'text', 'is_owner',
-            'commend_id', 'commends', 'reviews',
+            'commend_id', 'commends', 'reviews', 'status'
         ]
