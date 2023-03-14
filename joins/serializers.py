@@ -1,16 +1,16 @@
 from django.db import IntegrityError
 from rest_framework import serializers
-from .models import Member
+from .models import Join
 
 
-class MemberSerializer(serializers.ModelSerializer):
+class JoinSerializer(serializers.ModelSerializer):
     member = serializers.ReadOnlyField(source='member.username')
-    group_name = serializers.ReadOnlyField(source='group.title')
+    challenge_name = serializers.ReadOnlyField(source='challenge.title')
 
     class Meta:
-        model = Member
+        model = Join
         fields = [
-            'id', 'member', 'created_at', 'group', 'group_name'
+            'id', 'member', 'created_at', 'challenge', 'challenge_name'
         ]
 
     def create(self, validated_data):

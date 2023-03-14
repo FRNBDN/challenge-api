@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from challenges.models import Challenge
 
 
-class Member(models.Model):
+class Join(models.Model):
     member = models.ForeignKey(
         User, on_delete=models.CASCADE
     )
