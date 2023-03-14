@@ -32,10 +32,10 @@ class GroupSerializer(TaggitSerializer, serializers.ModelSerializer):
         members = Member.objects.filter(
             group=obj
         )
-        membersList = []
+        members_list = []
         for member in members:
-            membersList.append(member.member.username)
-        return membersList
+            members_list.append(member.member.username)
+        return members_list
 
     class Meta:
         model = Group

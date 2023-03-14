@@ -4,13 +4,7 @@ from .models import Submission
 from .serializers import SubmissionSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
 
-
-class SubmissionList(generics.ListCreateAPIView):
-    serializer_class = SubmissionSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
-    queryset = Submission.objects.annotate(
+QUERYSET = Submission.objects.annotate(
         commends=Count(
             'commend', distinct=True
         ),
@@ -18,6 +12,14 @@ class SubmissionList(generics.ListCreateAPIView):
             'review', distinct=True
         )
     )
+
+
+class SubmissionList(generics.ListCreateAPIView):
+    serializer_class = SubmissionSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly
+    ]
+    queryset = QUERYSET
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -26,11 +28,4 @@ class SubmissionList(generics.ListCreateAPIView):
 class SubmissionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubmissionSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Submission.objects.annotate(
-        commends=Count(
-            'commend', distinct=True
-        ),
-        reviews=Count(
-            'review', distinct=True
-        )
-    )
+    queryset = QUERYSET

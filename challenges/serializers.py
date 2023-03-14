@@ -34,10 +34,10 @@ class ChallengeSerializer(serializers.ModelSerializer):
         joins = Join.objects.filter(
             challenge=obj
             )
-        joinList = []
+        join_list = []
         for join in joins:
-            joinList.append(join.member.username)
-        return joinList
+            join_list.append(join.member.username)
+        return join_list
 
     def get_submissions(self, obj):
         request = self.context['request']
