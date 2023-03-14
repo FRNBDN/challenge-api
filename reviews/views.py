@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Review
 from .serializers import ReviewSerializer, ReviewDetailSerializer
@@ -11,6 +12,12 @@ class ReviewList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'submission',
+    ]
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):

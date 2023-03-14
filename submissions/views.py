@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Submission
 from .serializers import SubmissionSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -20,6 +21,12 @@ class SubmissionList(generics.ListCreateAPIView):
         permissions.IsAuthenticatedOrReadOnly
     ]
     queryset = QUERYSET
+    filter_backends = [
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'challenge',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

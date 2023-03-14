@@ -1,5 +1,6 @@
 from django.db.models import Count, Q
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Challenge
 from .serializers import ChallengeSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -22,6 +23,10 @@ class ChallengesList(generics.ListCreateAPIView):
     filter_backends = [
         filters.OrderingFilter,
         filters.SearchFilter,
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'group'
     ]
     search_fields = [
         'owner__username',
