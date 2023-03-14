@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 from submissions.models import Submission
 
 
 class Upload(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     submission = models.ForeignKey(
         Submission,
         on_delete=models.CASCADE,
