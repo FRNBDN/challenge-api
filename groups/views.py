@@ -1,5 +1,5 @@
 from django.db.models import Count
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Group
 from .serializers import GroupSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -16,6 +16,18 @@ class GroupList(generics.ListCreateAPIView):
         permissions.IsAuthenticatedOrReadOnly
     ]
     queryset = QUERYSET
+    filter_backends = [
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'tags__name',
+    ]
+    ordering_fields = [
+        'members_count',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

@@ -29,15 +29,19 @@ class ProfileList(generics.ListAPIView):
     queryset = QUERYSET
     serializer_class = ProfileSerializer
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
     ]
     ordering_fields = [
         'groups_joined',
         'followers_count',
         'following_count',
         'challenges_created',
-        'owner__following__created_at'
-        'owner__followed__created_at'
+        'owner__following__created_at',
+        'owner__followed__created_at',
+    ]
+    search_fields = [
+        'owner__username',
     ]
 
 

@@ -1,5 +1,5 @@
 from django.db.models import Count, Q
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Challenge
 from .serializers import ChallengeSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -19,6 +19,20 @@ class ChallengesList(generics.ListCreateAPIView):
         permissions.IsAuthenticatedOrReadOnly
     ]
     queryset = QUERYSET
+    filter_backends = [
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'description',
+    ]
+    ordering_fields = [
+        'users_count',
+        'submissions_count',
+        'completed_count',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
